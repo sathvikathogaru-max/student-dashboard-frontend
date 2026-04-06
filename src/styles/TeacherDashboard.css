@@ -1,0 +1,128 @@
+.dashboard-container {
+  min-height: 100vh;
+  background: #f5f7fa;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  padding: 40px 20px;
+}
+
+.dashboard-wrapper {
+  width: 100%;
+  max-width: 1100px;
+  text-align: center;
+}
+
+.dashboard-title {
+  font-size: 36px;
+  font-weight: 700;
+  color: #1f2937;
+  margin-bottom: 40px;
+}
+
+.stats-container {
+  display: flex;
+  justify-content: center;
+  gap: 30px;
+  flex-wrap: wrap;
+  margin-bottom: 30px;
+}
+
+.stat-box {
+  width: 200px;
+  padding: 25px;
+  border-radius: 18px;
+  background: linear-gradient(135deg, #60a5fa, #6366f1);
+  color: white;
+  font-size: 18px;
+  font-weight: 600;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+  transition: transform 0.3s ease;
+}
+.stat-box:hover { transform: translateY(-5px); }
+
+.add-student-btn {
+  background: #4f46e5;
+  color: white;
+  font-weight: 600;
+  padding: 12px 25px;
+  border-radius: 12px;
+  border: none;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+.add-student-btn:hover {
+  background: #6366f1;
+  transform: translateY(-2px);
+}
+
+.dashboard-card {
+  margin: 40px auto;
+  background: #ffffff;
+  padding: 40px;
+  border-radius: 20px;
+  width: 100%;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+  text-align: center;
+}
+
+.section-title { font-size: 24px; font-weight: 600; color: #4f46e5; margin-bottom: 20px; }
+
+.student-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 25px;
+}
+
+.grade-badge {
+  background: #4f46e5;
+  padding: 5px 15px;
+  border-radius: 12px;
+  color: white;
+  font-weight: 600;
+}
+
+.marks-grid {
+  display: flex;
+  justify-content: center;
+  gap: 30px;
+  margin-bottom: 20px;
+}
+
+.marks-grid label { display: block; margin-bottom: 6px; color: #374151; }
+.marks-grid input {
+  width: 80px;
+  padding: 6px;
+  border-radius: 8px;
+  border: 1px solid #d1d5db;
+  text-align: center;
+}
+
+.remarks-section label { display: block; margin-bottom: 6px; color: #374151; }
+.remarks-section textarea {
+  width: 80%;
+  padding: 10px;
+  border-radius: 10px;
+  border: 1px solid #d1d5db;
+  resize: none;
+  background: #f9fafb;
+  color: #1f2937;
+}
+/* Remove Student Button */
+.remove-student-btn {
+  background: #ef4444; /* red */
+  color: white;
+  font-weight: 600;
+  padding: 8px 18px;
+  border-radius: 10px;
+  border: none;
+  cursor: pointer;
+  margin-top: 15px;
+  transition: all 0.3s ease;
+}
+
+.remove-student-btn:hover {
+  background: #f87171;
+  transform: translateY(-2px);
+}
