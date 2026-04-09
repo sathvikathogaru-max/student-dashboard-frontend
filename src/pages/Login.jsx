@@ -3,39 +3,55 @@ import { useNavigate } from "react-router-dom";
 import "../styles/Login.css";
 
 function Login() {
+
   const navigate = useNavigate();
+
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
 
-  // Load users from localStorage or create default users
-  const storedUsers = JSON.parse(localStorage.getItem("users")) || [
-    { email: "teacher@example.com", password: "teacher123", role: "teacher", name: "Teacher" },
-    { email: "student@example.com", password: "student123", role: "student", name: "Student" }
-  ];
-
-  localStorage.setItem("users", JSON.stringify(storedUsers));
-
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
-    const user = storedUsers.find(
-      (u) => u.email === email && u.password === password
-    );
+    try {
 
-    if (user) {
-      setError("");
-      if (user) {
-  localStorage.setItem("loggedInUser", JSON.stringify(user));
+      // try teacher login first
+      let response = await fetch("http://localhost:5000/teacher-login", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({ email, password })
+      });
 
-  if (user.role === "teacher") {
-    navigate("/teacher");
-  } else {
-    navigate("/student");
-  }
-}
-    } else {
-      setError("Invalid email or password");
+      let data = await response.json();
+
+      if (data.success) {
+        localStorage.setItem("loggedInUser", JSON.stringify(data.user));
+        navigate("/teacher");
+        return;
+      }
+
+      // try student login
+      response = await fetch("http://localhost:5000/student-login", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({ email, password })
+      });
+
+      data = await response.json();
+
+      if (data.success) {
+        localStorage.setItem("loggedInUser", JSON.stringify(data.user));
+        navigate("/student");
+      } else {
+        setError("Invalid email or password");
+      }
+
+    } catch (err) {
+      setError("Server error");
     }
   };
 
@@ -43,7 +59,9 @@ function Login() {
     <div className="login-container">
       <div className="login-card">
         <h1>Welcome Back</h1>
+
         <form onSubmit={handleSubmit}>
+
           <label>Email</label>
           <input
             type="email"
@@ -65,6 +83,7 @@ function Login() {
           {error && <p className="error">{error}</p>}
 
           <button type="submit">Login</button>
+
         </form>
       </div>
     </div>
