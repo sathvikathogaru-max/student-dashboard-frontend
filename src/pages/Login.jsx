@@ -10,13 +10,16 @@ function Login() {
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
 
+  const API = "https://YOUR_RENDER_BACKEND_URL.onrender.com";
+
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setError("");
 
     try {
 
-      // try teacher login first
-      let response = await fetch("http://localhost:5000/teacher-login", {
+      // Teacher login
+      let response = await fetch(`${API}/teacher-login`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json"
@@ -24,16 +27,18 @@ function Login() {
         body: JSON.stringify({ email, password })
       });
 
-      let data = await response.json();
+      if (response.ok) {
+        let data = await response.json();
 
-      if (data.success) {
-        localStorage.setItem("loggedInUser", JSON.stringify(data.user));
-        navigate("/teacher");
-        return;
+        if (data.success) {
+          localStorage.setItem("loggedInUser", JSON.stringify(data.user));
+          navigate("/teacher");
+          return;
+        }
       }
 
-      // try student login
-      response = await fetch("http://localhost:5000/student-login", {
+      // Student login
+      response = await fetch(`${API}/student-login`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json"
@@ -41,17 +46,21 @@ function Login() {
         body: JSON.stringify({ email, password })
       });
 
-      data = await response.json();
+      if (response.ok) {
+        let data = await response.json();
 
-      if (data.success) {
-        localStorage.setItem("loggedInUser", JSON.stringify(data.user));
-        navigate("/student");
-      } else {
-        setError("Invalid email or password");
+        if (data.success) {
+          localStorage.setItem("loggedInUser", JSON.stringify(data.user));
+          navigate("/student");
+          return;
+        }
       }
+
+      setError("Invalid email or password");
 
     } catch (err) {
-      setError("Server error");
+      console.error(err);
+      setError("Server error. Please try again.");
     }
   };
 
