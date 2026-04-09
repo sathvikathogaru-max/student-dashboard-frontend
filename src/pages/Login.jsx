@@ -16,7 +16,7 @@ function Login() {
     try {
 
       // try teacher login first
-      let response = await fetch("http://localhost:5000/teacher-login", {
+      let response = await fetch("https://student-dashboard-backend-9lnb.onrender.com", {
         method: "POST",
         headers: {
           "Content-Type": "application/json"
