@@ -13,10 +13,12 @@ function TeacherDashboard() {
 
   const [students, setStudents] = useState([]);
 
+  const BASE_URL = "https://student-dashboard-backend.onrender.com";
+
   /* ---------------- FETCH STUDENTS FROM BACKEND ---------------- */
 
   useEffect(() => {
-    fetch("https://student-dashboard-backend-9lnb.onrender.com")
+    fetch(`${BASE_URL}/students`)
       .then(res => res.json())
       .then(data => setStudents(data))
       .catch(err => console.log(err));
@@ -71,7 +73,7 @@ function TeacherDashboard() {
       remarks: ""
     };
 
-    const res = await fetch("http://localhost:5000/add-student", {
+    const res = await fetch(`${BASE_URL}/add-student`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json"
@@ -83,7 +85,8 @@ function TeacherDashboard() {
     alert(data.message);
 
     /* refresh students */
-    fetch("http://localhost:5000/students")
+
+    fetch(`${BASE_URL}/students`)
       .then(res => res.json())
       .then(data => setStudents(data));
   };
@@ -146,6 +149,7 @@ function TeacherDashboard() {
         {/* Stats */}
 
         <div className="stats-container">
+
           <div className="stat-box">
             Class Average <br />
             {marksAssigned ? classAverage.toFixed(2) : "--"}
@@ -160,6 +164,7 @@ function TeacherDashboard() {
             Total Students <br />
             {students.length}
           </div>
+
         </div>
 
         {/* Add Student */}
