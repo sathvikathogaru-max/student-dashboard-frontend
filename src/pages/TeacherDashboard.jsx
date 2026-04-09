@@ -16,7 +16,7 @@ function TeacherDashboard() {
   /* ---------------- FETCH STUDENTS FROM BACKEND ---------------- */
 
   useEffect(() => {
-    fetch("https://student-dashboard-backend.onrender.com/api/login")
+    fetch("https://student-dashboard-backend-9lnb.onrender.com")
       .then(res => res.json())
       .then(data => setStudents(data))
       .catch(err => console.log(err));
